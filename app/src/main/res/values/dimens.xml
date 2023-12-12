@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_size">11sp</dimen>
+    <dimen name="regular_size">14sp</dimen>
+    <dimen name="large_size">18sp</dimen>
+    <dimen name="larger_size">19sp</dimen>
+    <dimen name="badge_inset">16dp</dimen>
+</resources>
