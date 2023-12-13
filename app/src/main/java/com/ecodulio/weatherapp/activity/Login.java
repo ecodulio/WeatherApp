@@ -1,6 +1,12 @@
 package com.ecodulio.weatherapp.activity;
 
-import static com.ecodulio.weatherapp.utils.Global.*;
+import static com.ecodulio.weatherapp.utils.Global.getAccount;
+import static com.ecodulio.weatherapp.utils.Global.getTextInput;
+import static com.ecodulio.weatherapp.utils.Global.hasAccount;
+import static com.ecodulio.weatherapp.utils.Global.hasUserData;
+import static com.ecodulio.weatherapp.utils.Global.hashString;
+import static com.ecodulio.weatherapp.utils.Global.isEmpty;
+import static com.ecodulio.weatherapp.utils.Global.setUserData;
 
 import android.content.Intent;
 import android.os.Bundle;
