@@ -1,21 +1,26 @@
 package com.ecodulio.weatherapp.utils;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.LocationManager;
 import android.util.Base64;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.ecodulio.weatherapp.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +37,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Global {
+    public static AlertDialog dialog;
+
     public static boolean isEmpty(Context context, TextInputEditText[] mTextInputEditTexts) {
         for (TextInputEditText text : mTextInputEditTexts) {
             if (text.getText().toString().isEmpty()) {
@@ -122,18 +129,27 @@ public class Global {
 
     public static String convertUnixTime(long unixTime) {
         Date date = new Date(unixTime * 1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
         return sdf.format(date);
     }
 
-    public static JSONObject getAccount(Context context, String email) {
-        try {
-            return new JSONObject(context.getSharedPreferences("accounts", Context.MODE_PRIVATE).getString(email, ""));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return new JSONObject();
+    public static void dismissAlertDialog() {
+        if (dialog != null && dialog.isShowing())
+            dialog.dismiss();
+    }
+
+    public static void showAlertDialog(Context context, String title, String message, String negative, String positive, DialogInterface.OnClickListener onClick) {
+        dismissAlertDialog();
+        dialog = new MaterialAlertDialogBuilder(context, R.style.MaterialAlertDialogStyle).create();
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setCancelable(false);
+        dialog.setButton(Dialog.BUTTON_POSITIVE, positive, onClick);
+        if (!negative.isEmpty()) {
+            dialog.setButton(Dialog.BUTTON_NEGATIVE, negative, onClick);
         }
+        dialog.show();
     }
 
     public static void getRequest(Context context, String endpoint, Map<String, List<String>> queries, FutureCallback<Response<String>> callback) {
@@ -145,12 +161,30 @@ public class Global {
                 .setCallback(callback);
     }
 
-    public static void logResponse(Response<String> result) {
-        Log.d("API", String.format("response %d\n%s\n%s", result.getHeaders().code(), result.getRequest().getUri().toString(), result.getResult()));
+    public static JSONObject getAccount(Context context, String email) {
+        try {
+            return new JSONObject(context.getSharedPreferences("accounts", Context.MODE_PRIVATE).getString(email, ""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new JSONObject();
+        }
+    }
+
+    public static JSONArray getWeatherHistory(Context context, String email) {
+        try {
+            return new JSONArray(context.getSharedPreferences("history", Context.MODE_PRIVATE).getString(email, ""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new JSONArray();
+        }
     }
 
     public static void setUserData(Context context, String data) {
         context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().putString("data", data).apply();
+    }
+
+    public static void addWeather(Context context, String email, String data) {
+        context.getSharedPreferences("history", Context.MODE_PRIVATE).edit().putString(email, data).apply();
     }
 
     public static void addAccount(Context context, String email, String data) {
@@ -159,6 +193,10 @@ public class Global {
 
     public static boolean hasAccount(Context context, String email) {
         return context.getSharedPreferences("accounts", Context.MODE_PRIVATE).contains(email);
+    }
+
+    public static boolean hasHistory(Context context, String email) {
+        return context.getSharedPreferences("history", Context.MODE_PRIVATE).contains(email);
     }
 
     public static boolean hasUserData(Context context) {

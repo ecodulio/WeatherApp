@@ -1,13 +1,20 @@
 package com.ecodulio.weatherapp.activity;
 
-import static com.ecodulio.weatherapp.utils.Global.*;
-
-import androidx.appcompat.app.AppCompatActivity;
+import static com.ecodulio.weatherapp.utils.Global.addAccount;
+import static com.ecodulio.weatherapp.utils.Global.getTextInput;
+import static com.ecodulio.weatherapp.utils.Global.hasAccount;
+import static com.ecodulio.weatherapp.utils.Global.hashString;
+import static com.ecodulio.weatherapp.utils.Global.isEmpty;
+import static com.ecodulio.weatherapp.utils.Global.isValidEmail;
+import static com.ecodulio.weatherapp.utils.Global.isValidPassword;
+import static com.ecodulio.weatherapp.utils.Global.setTextError;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.ecodulio.weatherapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.ecodulio.weatherapp.databinding.ActivityCreateAccountBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -15,27 +22,36 @@ import org.json.JSONObject;
 
 public class CreateAccount extends AppCompatActivity {
 
+    private ActivityCreateAccountBinding binding;
     private TextInputEditText textInputFirstName;
     private TextInputEditText textInputLastName;
     private TextInputEditText textInputEmail;
     private TextInputEditText textInputPassword;
     private TextInputEditText textInputConfirmPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
 
-        textInputFirstName = findViewById(R.id.text_input_first_name);
-        textInputLastName = findViewById(R.id.text_input_last_name);
-        textInputEmail = findViewById(R.id.text_input_email);
-        textInputPassword = findViewById(R.id.text_input_password);
-        textInputConfirmPassword = findViewById(R.id.text_input_confirm_password);
+        setVariables();
+        setListeners();
 
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        setContentView(binding.getRoot());
+    }
 
-        findViewById(R.id.btn_submit).setOnClickListener(v -> {
+    private void setVariables() {
+        textInputFirstName = binding.textInputFirstName;
+        textInputLastName = binding.textInputLastName;
+        textInputEmail = binding.textInputEmail;
+        textInputPassword = binding.textInputPassword;
+        textInputConfirmPassword = binding.textInputConfirmPassword;
+    }
+
+    private void setListeners() {
+        binding.btnBack.setOnClickListener(v -> finish());
+
+        binding.btnSubmit.setOnClickListener(v -> {
             if (isEmpty(this, new TextInputEditText[]{textInputFirstName, textInputLastName, textInputEmail, textInputPassword, textInputConfirmPassword})) {
                 if (isValidEmail(getTextInput(textInputEmail))) {
                     if (isValidPassword(getTextInput(textInputPassword))) {

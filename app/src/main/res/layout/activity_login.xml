@@ -1,131 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/md_theme_light_background"
-    android:padding="8dp"
-    tools:context=".activity.Login">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/image_header"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:src="@mipmap/image_logo"
-        app:layout_constraintBottom_toTopOf="@id/text_login"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_light_background"
+        android:padding="8dp"
+        tools:context=".activity.Login">
 
-    <TextView
-        android:id="@+id/text_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/avenir_bold"
-        android:text="WeatherApp"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/md_theme_light_onBackground"
-        app:layout_constraintBottom_toTopOf="@id/text_input_layout_email"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_header" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_email"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
-        app:boxBackgroundColor="@color/md_theme_light_secondaryContainer"
-        app:boxCornerRadiusBottomEnd="32dp"
-        app:boxCornerRadiusBottomStart="32dp"
-        app:boxCornerRadiusTopEnd="32dp"
-        app:boxCornerRadiusTopStart="32dp"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:errorTextAppearance="@style/HintTextAppearance"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@style/HintTextAppearance"
-        app:layout_constraintBottom_toTopOf="@id/text_input_layout_password"
-        app:layout_constraintTop_toBottomOf="@id/text_login"
-        app:startIconDrawable="@drawable/ic_email_sign">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_email"
+        <ImageView
+            android:id="@+id/image_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/avenir_regular"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            tools:text="example@gmail.com" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="250dp"
+            android:src="@mipmap/image_logo"
+            app:layout_constraintBottom_toTopOf="@id/text_login"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_password"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        app:boxBackgroundColor="@color/md_theme_light_secondaryContainer"
-        app:boxCornerRadiusBottomEnd="32dp"
-        app:boxCornerRadiusBottomStart="32dp"
-        app:boxCornerRadiusTopEnd="32dp"
-        app:boxCornerRadiusTopStart="32dp"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:errorIconDrawable="@null"
-        app:errorTextAppearance="@style/HintTextAppearance"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@style/HintTextAppearance"
-        app:layout_constraintBottom_toTopOf="@id/btn_login"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout_email"
-        app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/ic_lock">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_password"
+        <TextView
+            android:id="@+id/text_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/avenir_regular"
-            android:hint="Password"
-            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/avenir_bold"
+            android:text="WeatherApp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintBottom_toTopOf="@id/text_input_layout_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_header" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_email"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            app:boxBackgroundColor="@color/md_theme_light_secondaryContainer"
+            app:boxCornerRadiusBottomEnd="32dp"
+            app:boxCornerRadiusBottomStart="32dp"
+            app:boxCornerRadiusTopEnd="32dp"
+            app:boxCornerRadiusTopStart="32dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:errorTextAppearance="@style/HintTextAppearance"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/HintTextAppearance"
+            app:layout_constraintBottom_toTopOf="@id/text_input_layout_password"
+            app:layout_constraintTop_toBottomOf="@id/text_login"
+            app:startIconDrawable="@drawable/ic_email_sign">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/avenir_regular"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="example@gmail.com" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_password"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundColor="@color/md_theme_light_secondaryContainer"
+            app:boxCornerRadiusBottomEnd="32dp"
+            app:boxCornerRadiusBottomStart="32dp"
+            app:boxCornerRadiusTopEnd="32dp"
+            app:boxCornerRadiusTopStart="32dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:errorIconDrawable="@null"
+            app:errorTextAppearance="@style/HintTextAppearance"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/HintTextAppearance"
+            app:layout_constraintBottom_toTopOf="@id/btn_login"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_email"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/avenir_regular"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/avenir_bold"
+            android:paddingHorizontal="48dp"
+            android:text="LOGIN"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            tools:text="password" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:backgroundTint="@color/md_theme_light_primary"
+            app:layout_constraintBottom_toTopOf="@id/btn_create_account"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_password" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
-        style="@style/Widget.Material3.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/avenir_bold"
-        android:paddingHorizontal="48dp"
-        android:text="LOGIN"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:backgroundTint="@color/md_theme_light_primary"
-        app:layout_constraintBottom_toTopOf="@id/btn_create_account"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout_password" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_create_account"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/avenir_regular"
-        android:text="Create Account"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_create_account"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/avenir_regular"
+            android:text="Create Account"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

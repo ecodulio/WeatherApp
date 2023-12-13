@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ecodulio.weatherapp.R;
+import com.ecodulio.weatherapp.databinding.ActivityLoginBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -22,23 +22,34 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
+    private ActivityLoginBinding binding;
     private TextInputEditText textInputEmail;
     private TextInputEditText textInputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         if (hasUserData(this)) {
             startActivity(new Intent(this, Main.class));
             finish();
         }
 
-        textInputEmail = findViewById(R.id.text_input_email);
-        textInputPassword = findViewById(R.id.text_input_password);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
 
-        findViewById(R.id.btn_login).setOnClickListener(v -> {
+        setVariables();
+        setListeners();
+
+        setContentView(binding.getRoot());
+    }
+
+    private void setVariables() {
+        textInputEmail = binding.textInputEmail;
+        textInputPassword = binding.textInputPassword;
+    }
+
+    private void setListeners() {
+        binding.btnLogin.setOnClickListener(v -> {
             if (isEmpty(this, new TextInputEditText[]{textInputEmail, textInputPassword})) {
                 if (hasAccount(this, getTextInput(textInputEmail))) {
                     JSONObject jsonObject = getAccount(this, getTextInput(textInputEmail));
@@ -59,8 +70,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_create_account).setOnClickListener(v -> {
-            startActivity(new Intent(this, CreateAccount.class));
-        });
+        binding.btnCreateAccount.setOnClickListener(v -> startActivity(new Intent(this, CreateAccount.class)));
     }
 }

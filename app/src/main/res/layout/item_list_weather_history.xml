@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Filled"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/avenir_bold"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/vertical_guideline_70"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="City, Country" />
+
+        <TextView
+            android:id="@+id/text_sunrise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_weather_sunrise"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/avenir_regular"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_location"
+            tools:text="Sunrise" />
+
+        <TextView
+            android:id="@+id/text_sunset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:drawableStart="@drawable/ic_weather_sunset"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/avenir_regular"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintLeft_toRightOf="@id/text_sunrise"
+            app:layout_constraintTop_toBottomOf="@id/text_location"
+            tools:text="Sunset" />
+
+        <TextView
+            android:id="@+id/text_temperature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/avenir_bold"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintLeft_toLeftOf="@id/vertical_guideline_70"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="11.11°" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/avenir_regular"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/md_theme_light_onBackground"
+            app:layout_constraintBottom_toBottomOf="@id/image_weather"
+            app:layout_constraintLeft_toRightOf="@id/vertical_guideline_70"
+            app:layout_constraintRight_toLeftOf="@id/image_weather"
+            app:layout_constraintTop_toTopOf="@id/image_weather"
+            tools:text="Weather" />
+
+        <ImageView
+            android:id="@+id/image_weather"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_temperature" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
