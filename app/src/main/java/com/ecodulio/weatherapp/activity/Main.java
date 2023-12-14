@@ -6,6 +6,7 @@ import static com.ecodulio.weatherapp.utils.Constants.GET_REVERSE_GEOCODING;
 import static com.ecodulio.weatherapp.utils.Constants.ICON_BASE_URL;
 import static com.ecodulio.weatherapp.utils.Global.capitalize;
 import static com.ecodulio.weatherapp.utils.Global.convertHashMap;
+import static com.ecodulio.weatherapp.utils.Global.convertUnixTime;
 import static com.ecodulio.weatherapp.utils.Global.getRequest;
 import static com.ecodulio.weatherapp.utils.Global.isGPSEnabled;
 import static com.ecodulio.weatherapp.utils.Global.logResponse;
@@ -17,7 +18,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +36,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +49,12 @@ public class Main extends AppCompatActivity {
     private TextView textTemp;
     private TextView textLocation;
     private TextView textWeather;
+    private TextView textSunrise;
+    private TextView textSunset;
     private ImageView imageWeather;
+    private LinearLayout layoutProgressWeather;
+    private LinearLayout layoutProgressSunrise;
+    private LinearLayout layoutProgressSunset;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> permissionResultLauncher;
@@ -65,6 +73,11 @@ public class Main extends AppCompatActivity {
         textLocation = findViewById(R.id.text_location);
         textWeather = findViewById(R.id.text_weather);
         imageWeather = findViewById(R.id.image_weather);
+        textSunrise = findViewById(R.id.text_sunrise);
+        textSunset = findViewById(R.id.text_sunset);
+        layoutProgressWeather = findViewById(R.id.layout_progress_weather);
+        layoutProgressSunrise = findViewById(R.id.layout_progress_sunrise);
+        layoutProgressSunset = findViewById(R.id.layout_progress_sunset);
 
         permissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             locationPermissionGranted = result;
@@ -79,13 +92,12 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_coords).setOnClickListener(v -> {
-            if (isGPSEnabled(this)) {
-                getLocationPermission();
-            } else {
-                locationResultLauncher.launch(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        });
+        if (isGPSEnabled(this)) {
+            getLocationPermission();
+        } else {
+            locationResultLauncher.launch(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+
     }
 
     private void getLocationPermission() {
@@ -135,7 +147,6 @@ public class Main extends AppCompatActivity {
                                 Looper.getMainLooper());
                     }
                 });
-
             }
         } catch (SecurityException e) {
             Log.e("error-requestLocation", e.getMessage(), e);
@@ -155,10 +166,17 @@ public class Main extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result.getResult());
                     JSONObject weatherObject = jsonObject.getJSONArray("weather").getJSONObject(0);
+                    JSONObject sysObject = jsonObject.getJSONObject("sys");
                     textTemp.setText(String.format("%s°", jsonObject.getJSONObject("main").getString("temp")));
-                    Log.d("url", String.format("%s%s.png", ICON_BASE_URL, weatherObject.getString("icon")));
-                    Ion.with(this).load(String.format("%s%s.png", ICON_BASE_URL, weatherObject.getString("icon"))).intoImageView(imageWeather);
+                    Picasso.get().load(String.format("%s%s@4x.png", ICON_BASE_URL, weatherObject.getString("icon")))
+                            .into(imageWeather);
                     textWeather.setText(capitalize(weatherObject.getString("description")));
+                    textSunrise.setText(convertUnixTime(sysObject.getLong("sunrise")));
+                    textSunset.setText(convertUnixTime(sysObject.getLong("sunset")));
+
+                    layoutProgressWeather.setVisibility(View.GONE);
+                    layoutProgressSunrise.setVisibility(View.GONE);
+                    layoutProgressSunset.setVisibility(View.GONE);
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }

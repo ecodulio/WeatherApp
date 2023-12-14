@@ -22,9 +22,12 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -115,6 +118,13 @@ public class Global {
             values.add(value);
         }
         return map;
+    }
+
+    public static String convertUnixTime(long unixTime) {
+        Date date = new Date(unixTime * 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+
+        return sdf.format(date);
     }
 
     public static JSONObject getAccount(Context context, String email) {
