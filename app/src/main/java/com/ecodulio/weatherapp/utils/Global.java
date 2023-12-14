@@ -2,6 +2,7 @@ package com.ecodulio.weatherapp.utils;
 
 import android.content.Context;
 import android.location.LocationManager;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -21,8 +22,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import android.util.Base64;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

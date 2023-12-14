@@ -1,22 +1,31 @@
 package com.ecodulio.weatherapp.activity;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import static com.ecodulio.weatherapp.utils.Constants.APP_ID;
+import static com.ecodulio.weatherapp.utils.Constants.GET_CURRENT_WEATHER;
+import static com.ecodulio.weatherapp.utils.Constants.GET_REVERSE_GEOCODING;
+import static com.ecodulio.weatherapp.utils.Constants.ICON_BASE_URL;
+import static com.ecodulio.weatherapp.utils.Global.capitalize;
+import static com.ecodulio.weatherapp.utils.Global.convertHashMap;
+import static com.ecodulio.weatherapp.utils.Global.getRequest;
+import static com.ecodulio.weatherapp.utils.Global.isGPSEnabled;
+import static com.ecodulio.weatherapp.utils.Global.logResponse;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.ecodulio.weatherapp.utils.Constants.*;
-import static com.ecodulio.weatherapp.utils.Global.*;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.ecodulio.weatherapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -24,6 +33,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.koushikdutta.ion.Ion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,9 +46,11 @@ public class Main extends AppCompatActivity {
     private TextView textTemp;
     private TextView textLocation;
     private TextView textWeather;
+    private ImageView imageWeather;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private ActivityResultLauncher<String> permissionResultLauncher;
+    private ActivityResultLauncher<Intent> locationResultLauncher;
     private Location mLocation;
     private String latitude = "";
     private String longitude = "";
@@ -52,15 +64,26 @@ public class Main extends AppCompatActivity {
         textTemp = findViewById(R.id.text_temp);
         textLocation = findViewById(R.id.text_location);
         textWeather = findViewById(R.id.text_weather);
+        imageWeather = findViewById(R.id.image_weather);
 
         permissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             locationPermissionGranted = result;
             requestLocation();
         });
 
+        locationResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (isGPSEnabled(this)) {
+                getLocationPermission();
+            } else {
+                Toast.makeText(this, "Location must be enabled.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         findViewById(R.id.btn_coords).setOnClickListener(v -> {
             if (isGPSEnabled(this)) {
                 getLocationPermission();
+            } else {
+                locationResultLauncher.launch(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         });
     }
@@ -131,8 +154,11 @@ public class Main extends AppCompatActivity {
                 logResponse(result);
                 try {
                     JSONObject jsonObject = new JSONObject(result.getResult());
+                    JSONObject weatherObject = jsonObject.getJSONArray("weather").getJSONObject(0);
                     textTemp.setText(String.format("%s°", jsonObject.getJSONObject("main").getString("temp")));
-                    textWeather.setText(capitalize(jsonObject.getJSONArray("weather").getJSONObject(0).getString("description")));
+                    Log.d("url", String.format("%s%s.png", ICON_BASE_URL, weatherObject.getString("icon")));
+                    Ion.with(this).load(String.format("%s%s.png", ICON_BASE_URL, weatherObject.getString("icon"))).intoImageView(imageWeather);
+                    textWeather.setText(capitalize(weatherObject.getString("description")));
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
